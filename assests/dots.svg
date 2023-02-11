@@ -1,0 +1,9 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.486 2 2 6.486 2 12C2.001 17.515 6.487 22.001 12 22.001C17.514 22.001 22 17.515 22.001 12C22.001 6.486 17.515 2 12 2ZM12 20.001C7.59 20.001 4.001 16.412 4 12C4 7.589 7.589 4 12 4C16.412 4 20.001 7.589 20.001 12C20 16.412 16.411 20.001 12 20.001Z" fill="white"/>
+<rect x="5.5" y="10.5" width="3" height="3" rx="1.5" fill="white"/>
+<rect x="10.5" y="10.5" width="3" height="3" rx="1.5" fill="white"/>
+<rect x="15" y="10.5" width="3" height="3" rx="1.5" fill="white"/>
+<filter id='shadow' color-interpolation-filters="sRGB">
+    <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.5"/>
+  </filter>
+</svg>
