@@ -50,16 +50,25 @@ const TOOLTIP_THRESHOLD_ZOOM = 12;
 let map = L.map("map").setView([51.505, -0.09], 13);
 
 const tileLayerGroup = L.tileLayer(tile, {
+	markerZoomAnimation: true,
+	maxZoom: MAX_ZOOM,
+	dragging: true,
+	touchZoom: true,
+	scrollWheelZoom: true,
+	boxZoom: false,
+	keyboard: true,
+	zoomControl: true,
+	doubleClickZoom: true,
+	attributionControl: true,
+	closePopupOnClick: false,
+	trackResize: true,
 	attribution:
 		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 });
 
 tileLayerGroup.addTo(map);
 
-L.marker([51.5, -0.09])
-	.addTo(map)
-	.bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-	.openPopup();
+// L.marker([51.5, -0.09]).addTo(map).bindPopup("Hi!").openPopup();
 
 // Create additional Control placeholders
 function addControlPlaceholders(map) {
@@ -87,7 +96,7 @@ L.control.scale({ position: "verticalcenterleft" }).addTo(map);
 L.control
 	.locate({
 		locateOptions: {
-			setView: true,
+			// setView: true,
 			watch: true,
 			layer: tileLayerGroup,
 			maxZoom: MAX_ZOOM,
@@ -96,3 +105,42 @@ L.control
 	})
 	.setPosition("verticalcenterright")
 	.addTo(map);
+
+navigator.geolocation.getCurrentPosition(showPosition);
+
+async function showPosition(position) {
+	console.log(position.coords);
+	L.marker([position.coords.latitude, position.coords.longitude])
+		.addTo(map)
+		.bindPopup("Hi!")
+		.openPopup();
+
+	const province = await getUserProvince(
+		position.coords.latitude, //-45.92401275457338, //
+		position.coords.longitude //-67.55585276343744 //
+	);
+	console.log({ province });
+	// document.getElementById("provincia").value = province;
+}
+
+async function getUserProvince(lat, lon) {
+	// navigator.geolocation.getCurrentPosition()
+	let response = await fetch(
+		`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${lat}&lon=${lon}`
+	);
+	const result = await response.json();
+	let province = normalizeText(result.ubicacion.provincia.nombre);
+	province =
+		province == "CIUDAD AUTONOMA DE BUENOS AIRES"
+			? "CAPITAL FEDERAL"
+			: province;
+	return province;
+}
+
+//things that aren't in use
+const normalizeText = (str) => {
+	return str
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.toUpperCase();
+};
