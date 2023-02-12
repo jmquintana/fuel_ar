@@ -1,55 +1,25 @@
 console.log("script map.js");
 
-//variable declarations
 const tile = `https://tile.openstreetmap.org/{z}/{x}/{y}.png`;
 const tile2 = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
-const colors = ["#008800", "#FFFF00", "#BB0000"];
+
 const MAX_ZOOM = 17;
-const MIN_MAX_COLLISION_THRESHOLD = 0.15;
-const TOOLTIP_THRESHOLD_ZOOM = 12;
-// let myRenderer = L.canvas({ padding: 0.5 });
-// const myCircleMarker = (lat_lng, weight) => {
-// 	// const color = gradient(weight, ...colors);
-// 	return L.circleMarker(lat_lng, {
-// 		renderer: myRenderer,
-// 		// color: color,
-// 		fillOpacity: 0.75,
-// 		stroke: false,
-// 		bubblingMouseEvents: true,
-// 	});
-// };
-// const myMap = new L.Map("myMap", {
-// 	gestureHandling: true,
-// 	fullscreenControl: {
-// 		pseudoFullscreen: true, // if true, fullscreen to page width and height
-// 	},
-// }).on("click", function (ev) {
-// 	// updateTooltips();
-// });
+let coords = [-34.56723, -58.451452];
 
-// const tileLayerGroup = L.tileLayer(tile, {
-// 	markerZoomAnimation: true,
-// 	maxZoom: MAX_ZOOM,
-// 	dragging: true,
-// 	touchZoom: true,
-// 	scrollWheelZoom: true,
-// 	boxZoom: false,
-// 	keyboard: true,
-// 	zoomControl: true,
-// 	doubleClickZoom: true,
-// 	attributionControl: true,
-// 	closePopupOnClick: false,
-// 	trackResize: true,
-// 	attribution:
-// 		'&copy; <a href="http://openstreetmap' +
-// 		'.org">OpenStreetMap</a> contributors',
-// });
+let map = L.map("map").setView(coords, 15);
 
-// tileLayerGroup.addTo(myMap);
+const showPos = (position) => {
+	coords = [position.coords.latitude, position.coords.longitude];
+	console.log(coords);
+	let marker = L.marker(coords).addTo(map);
+	map.panTo(marker.getLatLng());
+};
 
-let map = L.map("map").setView([51.505, -0.09], 13);
+const getUserLocation = () => {
+	return navigator.geolocation.getCurrentPosition(showPos);
+};
 
-const tileLayerGroup = L.tileLayer(tile, {
+const tileLayerGroup = L.tileLayer(tile2, {
 	markerZoomAnimation: true,
 	maxZoom: MAX_ZOOM,
 	dragging: true,
@@ -68,9 +38,6 @@ const tileLayerGroup = L.tileLayer(tile, {
 
 tileLayerGroup.addTo(map);
 
-// L.marker([51.5, -0.09]).addTo(map).bindPopup("Hi!").openPopup();
-
-// Create additional Control placeholders
 function addControlPlaceholders(map) {
 	var corners = map._controlCorners,
 		l = "leaflet-",
@@ -106,25 +73,17 @@ L.control
 	.setPosition("verticalcenterright")
 	.addTo(map);
 
-navigator.geolocation.getCurrentPosition(showPosition);
-
 async function showPosition(position) {
 	console.log(position.coords);
-	L.marker([position.coords.latitude, position.coords.longitude], 13)
-		.addTo(map)
-		.bindPopup("Hi!")
-		.openPopup();
 
-	const province = await getUserProvince(
-		position.coords.latitude, //-45.92401275457338, //
-		position.coords.longitude //-67.55585276343744 //
-	);
+	let coords = [position.coords.latitude, position.coords.longitude];
+	var markers = L.marker(coords).addTo(map).openPopup();
+	map.panTo(markers.getLatLng());
+	const province = await getUserProvince(...coords);
 	console.log({ province });
-	// document.getElementById("provincia").value = province;
 }
 
 async function getUserProvince(lat, lon) {
-	// navigator.geolocation.getCurrentPosition()
 	let response = await fetch(
 		`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${lat}&lon=${lon}`
 	);
@@ -137,10 +96,11 @@ async function getUserProvince(lat, lon) {
 	return province;
 }
 
-//things that aren't in use
 const normalizeText = (str) => {
 	return str
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "")
 		.toUpperCase();
 };
+
+getUserLocation();
