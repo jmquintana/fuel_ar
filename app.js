@@ -110,7 +110,7 @@ navigator.geolocation.getCurrentPosition(showPosition);
 
 async function showPosition(position) {
 	console.log(position.coords);
-	L.marker([position.coords.latitude, position.coords.longitude])
+	L.marker([position.coords.latitude, position.coords.longitude], 13)
 		.addTo(map)
 		.bindPopup("Hi!")
 		.openPopup();
