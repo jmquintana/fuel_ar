@@ -18,7 +18,8 @@
 
 <body>
     <div class="main">
-        <div class="map">
+
+        <div class="head">
             <div class="search-container hide">
                 <input type="search" name="search" id="search">
             </div>
@@ -34,7 +35,6 @@
                 <img id="gps" class="icon ripple" src="./assests/gps_t.svg" alt="" srcset="">
                 <img id="filter" class="icon ripple" src="./assests/filter_t.svg" alt="" srcset="">
             </div>
-            <div id="map"></div>
         </div>
         <div class="footer">
             <div class="container">
@@ -44,22 +44,23 @@
                 </div>
                 <div class="prices">
                     <div class="min">
-                        <div class="label">Máximo</div>
+                        <div class="label">MIN</div>
                         <div id="min-price" class="price">151</div>
-                        <div id="min-brand" class="brand">Shell</div>
+                        <div id="min-brand" class="brand">DAPSA</div>
                     </div>
                     <div class="avg">
-                        <div class="label">Promedio</div>
+                        <div class="label">AVG</div>
                         <div id="avg-price" class="price">154</div>
                     </div>
                     <div class="max">
-                        <div class="label">Mínimo</div>
+                        <div class="label">MAX</div>
                         <div id="max-price" class="price">157</div>
-                        <div id="max-brand" class="brand">DAPSA</div>
+                        <div id="max-brand" class="brand">Shell</div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="map" class="map"></div>
     </div>
 
 </body>
