@@ -100,7 +100,7 @@ body {
     align-items: center;
     width: 100vw;
     /* margin-top: auto; */
-    margin-bottom: 9rem;
+    margin-bottom: 10.1rem;
     position: fixed;
     bottom: 0;
     z-index: 1001;
@@ -117,22 +117,38 @@ body {
     border-radius: 50%;
     /* width: 1rem; */
     /* height: 100%; */
-    filter: drop-shadow(rgba(0, 0, 0, 0.5) 0px 0px 5px);
-    transition: ease 0.1s;
+    filter: drop-shadow(rgba(0, 0, 0, 0.8) 0px 0px 2px);
+    /* transition: ease 0.1s; */
     user-select: none;
+
+    border: 1px solid rgba(120, 120, 120, 0.5);
+    filter: drop-shadow(0 1px 3px 0px rgba(#0F0F0F, .5), inset 0 1px rgba(#FFF, .2));
+
     z-index: 1001;
     -webkit-tap-highlight-color: transparent;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.rotated {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 .icon:hover {
     cursor: pointer;
     filter: drop-shadow(rgba(0, 0, 0, 0.9) 0px 0px 5px);
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
 }
 
 .ripple {
     background-position: center;
-    transition: background 0.5s;
 }
 
 .ripple:hover {
@@ -145,6 +161,10 @@ body {
     transition: background 0s;
 }
 
+.small-btn {
+    width: 2rem;
+    height: 2rem;
+}
 
 .container {
     width: 50vw;
@@ -173,7 +193,16 @@ body {
     user-select: none;
 }
 
+.product-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .product {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     font-size: 1.5em;
     color: #333;
     font-weight: 700;
