@@ -66,7 +66,7 @@ L.control
 			// setView: true,
 			watch: true,
 			layer: tileLayerGroup,
-			maxZoom: MAX_ZOOM,
+			maxZoom: MAX_ZOOM - 4,
 			enableHighAccuracy: true,
 		},
 	})
